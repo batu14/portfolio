@@ -1,6 +1,8 @@
 export const Icons = [
   {
     name: "Laptop",
+    title:'Lorem ipsum',
+    text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     svg: (
       <svg
         stroke="currentColor"
@@ -19,6 +21,8 @@ export const Icons = [
   },
   {
     name: "Tablet",
+    title:'Lorem ipsum',
+    text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     svg: (
       <svg
         stroke="currentColor"
@@ -35,6 +39,8 @@ export const Icons = [
   },
   {
     name: "Phone",
+    title:'Lorem ipsum',
+    text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.',
     svg: (
       <svg
         stroke="currentColor"
