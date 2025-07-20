@@ -337,7 +337,7 @@ const Index = () => {
       </div>
 
       {/* Scroll Animation Section */}
-      <section className="w-full p-12 min-h-screen h-auto relative grid grid-cols-1 md:grid-cols-2 gap-4 place-items-center bg-gray-50">
+      <section className="w-full p-4 lg:p-12 min-h-screen h-auto relative grid grid-cols-1 md:grid-cols-2 gap-4 place-items-center bg-gray-50">
         {images.map((item, index) => (
           <ProjectCard item={item} key={index} />
         ))}
