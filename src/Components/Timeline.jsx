@@ -1,17 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// GSAP ScrollTrigger plugin'ini kaydedelim
-gsap.registerPlugin(ScrollTrigger);
 
 const Timeline = ({ data }) => {
   const timelineRef = useRef(null);
   const itemsRef = useRef([]);
 
-  useEffect(() => {
+  useGSAP(() => {
+    const triggers = [];
+
     // Timeline çizgisi animasyonu
-    gsap.fromTo(
+    const lineAnim = gsap.fromTo(
       '.timeline-line',
       { scaleY: 0 },
       {
@@ -26,13 +25,16 @@ const Timeline = ({ data }) => {
         },
       }
     );
+    triggers.push(lineAnim.scrollTrigger);
 
     // Her bir timeline item için animasyon
     itemsRef.current.forEach((item, index) => {
+      if (!item) return;
+
       const direction = index % 2 === 0 ? -1 : 1;
       
       // Nokta animasyonu
-      gsap.fromTo(
+      const dotAnim = gsap.fromTo(
         item.querySelector('.timeline-dot'),
         { scale: 0, opacity: 0 },
         {
@@ -47,9 +49,10 @@ const Timeline = ({ data }) => {
           },
         }
       );
+      triggers.push(dotAnim.scrollTrigger);
 
       // Kart animasyonu
-      gsap.fromTo(
+      const cardAnim = gsap.fromTo(
         item.querySelector('.timeline-card'),
         { x: 30 * direction, opacity: 0 },
         {
@@ -64,20 +67,23 @@ const Timeline = ({ data }) => {
           },
         }
       );
+      triggers.push(cardAnim.scrollTrigger);
     });
-  }, [data]);
 
+    return triggers;
+  });
+  
   return (
-    <div ref={timelineRef} className="relative w-full p-12">
+    <div ref={timelineRef} className="relative lg:max-w-9xl w-full p-12">
       {/* Ana timeline çizgisi - Gradient ile */}
       <div className="timeline-line absolute left-1/2 top-0 bottom-0 w-0.5 origin-top" style={{
-        background: 'linear-gradient(0deg, rgba(156, 163, 175, 0.5) 0%, rgba(156, 163, 175, 0) 100%)',
+        background: 'linear-gradient(0deg, rgba(43, 127, 255, 1) 0%, rgba(43, 127, 255, 0) 100%)',
       }} />
 
       <div className="flex flex-col gap-8">
         {data.map((item, index) => (
           <div
-            key={index}
+            key={item.id || index}
             ref={(el) => (itemsRef.current[index] = el)}
             className={`relative flex items-center ${index % 2 === 0 ? 'justify-start' : 'justify-end'}`}
           >
@@ -92,19 +98,19 @@ const Timeline = ({ data }) => {
                 index % 2 === 0 ? 'mr-auto' : 'ml-auto'
               }`}
             >
-              <div className="relative w-full">
+              <div className="relative w-full ">
                 {/* Başlık ve tarih */}
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-base font-light text-gray-900">
+                <div className="flex items-center text-nowrap justify-between mb-2">
+                  <h3 className="lg:text-base text-sm font-light text-gray-900">
                     {item.title}
                   </h3>
-                  <span className="text-xs text-gray-400 font-light">
+                  <span className="text-xs hidden lg:block text-gray-400 font-light">
                     {item.date}
                   </span>
                 </div>
 
                 {/* Şirket ve lokasyon */}
-                <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
+                <div className=" hidden lg:flex items-center gap-2 text-sm text-gray-600 mb-2">
                   <span className="font-light text-gray-400">{item.company}</span>
                   {item.location && (
                     <>
@@ -115,7 +121,7 @@ const Timeline = ({ data }) => {
                 </div>
 
                 {/* Açıklama */}
-                <p className="text-sm text-gray-400 font-light leading-relaxed line-clamp-2">
+                <p className="text-sm text-gray-400 font-light leading-relaxed lg:line-clamp-2 line-clamp-6">
                   {item.description}
                 </p>
 
@@ -126,8 +132,8 @@ const Timeline = ({ data }) => {
                   }`}
                   style={{
                     background: index % 2 === 0 
-                      ? 'linear-gradient(90deg, rgba(156, 163, 175, 0) 0%, rgba(156, 163, 175, 0.5) 100%)'
-                      : 'linear-gradient(270deg, rgba(156, 163, 175, 0) 0%, rgba(156, 163, 175, 0.5) 100%)'
+                      ? 'linear-gradient(90deg, rgba(156, 163, 175, 0) 0%, rgba(43, 127, 255, 0.5) 100%)'
+                      : 'linear-gradient(270deg, rgba(156, 163, 175, 0) 0%, rgba(43, 127, 255, 0.5) 100%)'
                   }}
                 />
               </div>
