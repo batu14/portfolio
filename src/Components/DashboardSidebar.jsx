@@ -16,9 +16,9 @@ const DashboardSidebar = () => {
 
   const menuItems = [
     {
-      title: "Dashboard",
+      title: "Pages",
       icon: <RiDashboardLine className="h-5 w-5" />,
-      path: "/admin/dashboard",
+      path: "/admin/dashboard/pages",
     },
     {
       title: "Projects",
@@ -98,7 +98,11 @@ const DashboardSidebar = () => {
         className="w-full flex absolute bottom-5 p-5 group left-0 hover:bg-red-300 transition-all duration-300 items-center justify-start mt-auto"
       >
         <RiLogoutBoxRLine className="h-5 w-5 group-hover:text-red-500 transition-all duration-300" />
-        {!isCollapsed && <span className="ml-3 font-light group-hover:text-red-500 transition-all duration-300">Logout</span>}
+        {!isCollapsed && (
+          <span className="ml-3 font-light group-hover:text-red-500 transition-all duration-300">
+            Logout
+          </span>
+        )}
       </button>
     </div>
   );
