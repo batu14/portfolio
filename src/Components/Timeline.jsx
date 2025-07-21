@@ -74,7 +74,7 @@ const Timeline = ({ data }) => {
   });
   
   return (
-    <div ref={timelineRef} className="relative lg:max-w-9xl w-full p-12">
+    <div ref={timelineRef} className="relative lg:max-w-9xl w-full lg:p-12 p-4">
       {/* Ana timeline çizgisi - Gradient ile */}
       <div className="timeline-line absolute left-1/2 top-0 bottom-0 w-0.5 origin-top" style={{
         background: 'linear-gradient(0deg, rgba(43, 127, 255, 1) 0%, rgba(43, 127, 255, 0) 100%)',
@@ -100,11 +100,11 @@ const Timeline = ({ data }) => {
             >
               <div className="relative w-full ">
                 {/* Başlık ve tarih */}
-                <div className="flex items-center text-nowrap justify-between mb-2">
-                  <h3 className="lg:text-base text-sm font-light text-gray-900">
+                <div className="flex items-center  justify-between mb-2">
+                  <h3 className="lg:text-base text-wrap text-sm font-light text-gray-900">
                     {item.title}
                   </h3>
-                  <span className="text-xs hidden lg:block text-gray-400 font-light">
+                  <span className="lg:text-xs text-[6px]  hidden lg:block text-gray-400 font-light">
                     {item.date}
                   </span>
                 </div>
