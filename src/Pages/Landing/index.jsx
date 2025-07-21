@@ -10,6 +10,7 @@ import LanguageCard from "../../Components/LanguageCard";
 import { Icons } from "../../Constants/Icons";
 import ProjectCard from "../../Components/ProjectCard";
 import { motion } from "framer-motion";
+import Timeline from "../../Components/Timeline";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -79,6 +80,33 @@ const Index = () => {
       description:
         "MySQL, PostgreSQL ve MongoDB gibi güçlü altyapılarla sağlam ve güvenilir sistemler geliştiriyorum.",
     },
+  ];
+
+  const timelineData = [
+    {
+      title: "Senior Frontend Developer",
+      company: "Tech Company",
+      location: "İstanbul, Turkey",
+      date: "2023 - Present",
+      description: "Led the development of multiple high-impact web applications using React and Next.js. Implemented modern UI/UX designs and improved performance metrics.",
+      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"]
+    },
+    {
+      title: "Frontend Developer",
+      company: "Digital Agency",
+      location: "Remote",
+      date: "2021 - 2023",
+      description: "Developed responsive web applications and maintained existing client projects. Collaborated with design team to implement pixel-perfect interfaces.",
+      skills: ["React", "JavaScript", "SASS", "Redux"]
+    },
+    {
+      title: "Junior Developer",
+      company: "Startup",
+      location: "Ankara, Turkey",
+      date: "2020 - 2021",
+      description: "Started career as a junior developer working on various web projects. Gained experience in modern web technologies and best practices.",
+      skills: ["HTML", "CSS", "JavaScript", "jQuery"]
+    }
   ];
 
   // Tüm animasyonları tek bir useGSAP kancası altında yönetiyoruz.
@@ -389,14 +417,15 @@ const Index = () => {
                 yüksek çözümler üretmeyi önceliklendiriyorum.
               </p>
             </div>
+           
           </div>
         </div>
       </section>
-
+      <Timeline data={timelineData} />
       {/* Contact Section */}
       <section
         ref={contactSectionRef}
-        className="min-h-screen w-full bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col lg:flex-row items-center justify-center relative overflow-hidden p-4 md:p-8 lg:p-12"
+        className="min-h-screen w-full  flex flex-col lg:flex-row items-center justify-center relative overflow-hidden p-4 md:p-8 lg:p-12"
       >
         <div className="hidden lg:flex w-full lg:w-1/2 h-1/2 lg:h-full items-center justify-center relative z-10 p-4 lg:p-0">
           <div
