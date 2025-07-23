@@ -1,19 +1,20 @@
-import React, { useEffect } from "react";
 import Tab from "../../../Components/Tab";
 import Container from "../../../Components/Container";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Landing from "./Landing/index";
 import Skills from "./Skills/index";
 import About from "./About/index";
-import { setActiveTab } from "../../../Features/Tab/TabSlice";
+import Timeline from "./Timeline/index"
+import { CiAlarmOn } from "react-icons/ci";
 
 const index = () => {
-  const dispatch = useDispatch();
+
   const activeTab = useSelector((state) => state.tab.activeTab);
-  
+
   const tabs = [
     {
       name: "Landing",
+      icon: <CiAlarmOn></CiAlarmOn>
     },
     {
       name: "Skills",
@@ -21,6 +22,9 @@ const index = () => {
     {
       name: "About",
     },
+    {
+      name: "Timeline"
+    }
   ];
   return (
     <Container pageName={activeTab ? activeTab + " Pages" : "Pages"}>
@@ -28,6 +32,7 @@ const index = () => {
       {activeTab === "Landing" && <Landing />}
       {activeTab === "Skills" && <Skills />}
       {activeTab === "About" && <About />}
+      {activeTab === "Timeline" && <Timeline />}
     </Container>
   );
 };

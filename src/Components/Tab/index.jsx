@@ -6,6 +6,7 @@ import { setActiveTab } from "../../Features/Tab/TabSlice";
 const index = ({ children, tabs }) => {
   const dispatch = useDispatch();
   const activeTab = useSelector((state) => state.tab.activeTab);
+  console.log(tabs)
 
   return (
     <>
@@ -17,6 +18,7 @@ const index = ({ children, tabs }) => {
             onClick={() => dispatch(setActiveTab(tab.name))}
             variant={activeTab === tab.name ? "primary" : "ghost"}
           >
+            {tab.icon}
             <span>{tab.name}</span>
           </Button>
         ))}

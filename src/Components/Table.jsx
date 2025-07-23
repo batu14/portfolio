@@ -32,7 +32,7 @@ const Table = ({
   );
 
   const tdStyles = classNames(
-    "px-6 whitespace-nowrap",
+    "px-6 ",
     compact ? "py-2" : "py-4"
   );
 
