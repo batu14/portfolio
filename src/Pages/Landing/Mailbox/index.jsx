@@ -42,7 +42,7 @@ const index = () => {
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-0 md:p-4 lg:p-12 contact-content">
         <Toaster/>
-      <div className="w-full space-y-6 md:space-y-8 bg-white p-4 md:p-6 lg:p-8 rounded-lg shadow-xl border border-gray-100">
+      <div className="w-full space-y-6 md:space-y-8 bg-white p-4 md:p-6 lg:p-8 rounded-lg   border-gray-100">
         <div className="space-y-2 md:space-y-3">
           <h2 className="text-2xl md:text-3xl font-light text-gray-800">
             İletişime Geçin
