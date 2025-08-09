@@ -1,17 +1,30 @@
-import React from "react";
-import { useParams } from "react-router";
-// Import Swiper React components
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-// import required modules
 import { Pagination, Navigation, Autoplay } from "swiper/modules";
-import Dummy from "../../Constants/Dummy.webp";
 import { motion } from "framer-motion";
+import { useLocation } from "react-router";
 const ProjectDetail = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.pathname.split("-").pop();
+  const [data, setData] = useState(null);
+
+  const fetchData = () => {
+    fetch(import.meta.env.VITE_FRONT_URL + "project/" + id)
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const projectImages = [
     "https://placehold.co/1920x1080",
@@ -37,12 +50,13 @@ const ProjectDetail = () => {
       exit="out"
       variants={pageVariants}
       transition={pageTransition}
-      className="min-h-screen  bg-gray-50">
+      className="min-h-screen  bg-gray-50"
+    >
       <div className="max-w-7xl flex flex-col-reverse lg:flex-col gap-12 mx-auto px-4 py-12">
         {/* Proje Başlığı ve Teknolojiler */}
         <div className="mb-6 hidden lg:block">
           <h1 className="text-4xl font-light text-gray-900 mb-4">
-            Project Title
+            {data && data.title}
           </h1>
           <div className="flex items-center gap-4 text-gray-600">
             <div className="flex items-center gap-2">
@@ -60,10 +74,23 @@ const ProjectDetail = () => {
                   d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span className="text-sm">React, Tailwind, GSAP</span>
+              <span className="text-sm">
+                {data &&
+                  data.tecs
+                    .replaceAll('"', "")
+                    .split(",")
+                    .map((tec, index) => (
+                      <span
+                        key={index}
+                        className="px-3 capitalize py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+                      >
+                        {tec}
+                      </span>
+                    ))}
+              </span>
             </div>
             <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-            <span className="text-sm">2024</span>
+            <span className="text-sm">{data && data.publishYear}</span>
           </div>
         </div>
 
@@ -78,24 +105,27 @@ const ProjectDetail = () => {
               <div className="space-y-4">
                 <div>
                   <h4 className="text-sm text-gray-500 mb-1">Client</h4>
-                  <p className="text-gray-900">Client Name</p>
+                  <p className="text-gray-900">{data && data.clientName}</p>
                 </div>
                 <div>
                   <h4 className="text-sm text-gray-500 mb-1">Timeline</h4>
-                  <p className="text-gray-900">3 months</p>
+                  <p className="text-gray-900">{data && data.timeline}</p>
                 </div>
                 <div>
                   <h4 className="text-sm text-gray-500 mb-1">Technologies</h4>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
-                      React
-                    </span>
-                    <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
-                      Tailwind CSS
-                    </span>
-                    <span className="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-700">
-                      GSAP
-                    </span>
+                    {data &&
+                      data.tecs
+                        .replaceAll('"', "")
+                        .split(",")
+                        .map((tec, index) => (
+                          <span
+                            key={index}
+                            className="px-3 capitalize py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+                          >
+                            {tec}
+                          </span>
+                        ))}
                   </div>
                 </div>
               </div>
@@ -105,7 +135,7 @@ const ProjectDetail = () => {
               <h3 className="text-xl font-light text-gray-900 mb-6">Links</h3>
               <div className="space-y-3">
                 <a
-                  href="#"
+                  href={data && data.demo}
                   className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors"
                 >
                   <svg
@@ -125,7 +155,7 @@ const ProjectDetail = () => {
                   Live Demo
                 </a>
                 <a
-                  href="#"
+                  href={data && data.github}
                   className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors"
                 >
                   <svg
@@ -168,15 +198,20 @@ const ProjectDetail = () => {
                 modules={[Pagination, Navigation, Autoplay]}
                 className="w-full aspect-video"
               >
-                {projectImages.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <img
-                      src={image}
-                      alt={`Screenshot ${index + 1}`}
-                      className="w-full h-full object-cover rounded-lg"
-                    />
-                  </SwiperSlide>
-                ))}
+                {data &&
+                  data.images.split(",").map((image, index) => (
+                    <SwiperSlide key={index}>
+                      <img
+                        src={
+                          import.meta.env.VITE_FRONT_URL +
+                          "/uploads/projects/" +
+                          image
+                        }
+                        alt={`Screenshot ${index + 1}`}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    </SwiperSlide>
+                  ))}
               </Swiper>
             </div>
 
@@ -187,24 +222,29 @@ const ProjectDetail = () => {
           <h2 className="text-2xl font-light text-gray-900 mb-8 relative after:absolute after:bottom-[-10px] after:left-0 after:w-20 after:h-1 after:bg-blue-500 after:rounded-full">
             About Project
           </h2>
-          <div className="prose prose-gray max-w-none">
+          <div className=" max-w-none">
             <p>
-              Detailed description of the project, its goals, and the problems
-              it solves. This section can be quite lengthy and include multiple
-              paragraphs.
+              {data &&
+                data.description
+                  .trim()
+                  .split("\n\n")
+                  .map((paragraph, index) =>
+                    paragraph.split("\n").map((line, index) => (
+                      <p
+                        key={index}
+                        className="font-thin font-serif capitalize mb-5"
+                      >
+                        {line}
+                      </p>
+                    ))
+                  )}
             </p>
-            <h3>Key Features</h3>
-            <ul>
-              <li>Feature 1 with detailed explanation</li>
-              <li>Feature 2 with detailed explanation</li>
-              <li>Feature 3 with detailed explanation</li>
-            </ul>
           </div>
         </div>
 
         <div className="p-4 block lg:hidden">
           <h1 className="text-4xl font-light text-gray-900 mb-4">
-            Project Title
+            {data && data.title}
           </h1>
           <div className="flex items-center gap-4 text-gray-600">
             <div className="flex items-center gap-2">
@@ -222,10 +262,23 @@ const ProjectDetail = () => {
                   d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                 />
               </svg>
-              <span className="text-sm">React, Tailwind, GSAP</span>
+              <span className="text-sm">
+                {data &&
+                  data.tecs
+                    .replaceAll('"', "")
+                    .split(",")
+                    .map((tec, index) => (
+                      <span
+                        key={index}
+                        className="px-3 capitalize py-1 bg-gray-100 rounded-full text-sm text-gray-700"
+                      >
+                        {tec}
+                      </span>
+                    ))}
+              </span>
             </div>
             <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-            <span className="text-sm">2024</span>
+            <span className="text-sm">{data && data.publishYear}</span>
           </div>
         </div>
       </div>

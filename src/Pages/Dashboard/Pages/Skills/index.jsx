@@ -12,6 +12,8 @@ import { CiEdit } from "react-icons/ci";
 import { CiTrash } from "react-icons/ci";
 import Loading from "../../../../Components/Loading";
 
+import { Toaster,toast } from "react-hot-toast";
+
 const index = () => {
   const dispatch = useDispatch();
   const { id } = useSelector((state) => state.skills);
@@ -59,10 +61,17 @@ const index = () => {
   const handleDelete = (id) => {
     fetch(import.meta.env.VITE_API_URL + "skills/delete/" + id, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if(data.status === 200){
+          toast.success(data.message);
+        }else{
+          toast.error(data.message);
+        }
       });
   };
 
@@ -84,6 +93,7 @@ const index = () => {
 
   return (
     <Container isPadding={false}>
+      <Toaster position="top-right" />
       <div className="w-full flex items-center justify-end py-4">
         <Button
           onClick={() => {

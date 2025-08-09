@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Timeline from "../../../Components/Timeline";
 
 const index = () => {
+  const [data, setData] = useState(null);
+  const fetchData = async () => {
+    const res = await fetch(import.meta.env.VITE_FRONT_URL + "timeline");
+    const data = await res.json();
+    setData(data.data);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const timelineData = [
     {
       title: "Senior Frontend Developer",
@@ -61,7 +70,7 @@ const index = () => {
 
   return (
     <section className="w-full flex items-center justify-center">
-      <Timeline data={timelineData} />
+      <Timeline data={data} />
     </section>
   );
 };

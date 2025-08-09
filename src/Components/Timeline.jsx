@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from 'gsap';
 
 const Timeline = ({ data }) => {
+  console.log(data);
   const timelineRef = useRef(null);
   const itemsRef = useRef([]);
 
@@ -81,7 +82,7 @@ const Timeline = ({ data }) => {
       }} />
 
       <div className="flex flex-col gap-8">
-        {data.map((item, index) => (
+        {data && data.map((item, index) => (
           <div
             key={item.id || index}
             ref={(el) => (itemsRef.current[index] = el)}
@@ -105,7 +106,7 @@ const Timeline = ({ data }) => {
                     {item.title}
                   </h3>
                   <span className="lg:text-xs text-[6px]  hidden lg:block text-gray-400 font-light">
-                    {item.date}
+                    {item.start}-{item.end}
                   </span>
                 </div>
 
@@ -121,8 +122,8 @@ const Timeline = ({ data }) => {
                 </div>
 
                 {/* Açıklama */}
-                <p className="text-sm text-gray-400 font-light leading-relaxed lg:line-clamp-2 line-clamp-6">
-                  {item.description}
+                <p className="text-sm text-gray-400 font-light leading-relaxed lg:line-clamp-3 line-clamp-6">
+                  {item.text}
                 </p>
 
                 {/* Dekoratif çizgi - Gradient ile */}
