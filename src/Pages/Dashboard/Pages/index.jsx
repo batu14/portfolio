@@ -1,30 +1,40 @@
 import Tab from "../../../Components/Tab";
 import Container from "../../../Components/Container";
-import { useSelector } from "react-redux";
+import { useSelector ,useDispatch} from "react-redux";
 import Landing from "./Landing/index";
 import Skills from "./Skills/index";
 import About from "./About/index";
-import Timeline from "./Timeline/index"
-import { CiAlarmOn } from "react-icons/ci";
+import Timeline from "./Timeline/index";
+import { FaHome, FaNetworkWired } from "react-icons/fa";
+import { FaTimeline } from "react-icons/fa6";
+import { CiTextAlignLeft } from "react-icons/ci";
+import { useEffect } from "react";
+import { setActiveTab } from "../../../Features/Tab/TabSlice";
 
 const index = () => {
-
   const activeTab = useSelector((state) => state.tab.activeTab);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setActiveTab("Landing"));
+  }, []);
 
   const tabs = [
     {
       name: "Landing",
-      icon: <CiAlarmOn></CiAlarmOn>
+      icon: <FaHome />,
     },
     {
       name: "Skills",
+      icon: <FaNetworkWired />,
     },
     {
       name: "About",
+      icon: <CiTextAlignLeft />,
     },
     {
-      name: "Timeline"
-    }
+      name: "Timeline",
+      icon: <FaTimeline />,
+    },
   ];
   return (
     <Container pageName={activeTab ? activeTab + " Pages" : "Pages"}>

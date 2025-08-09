@@ -52,9 +52,7 @@ const Table = ({
                   {col.header || col}
                 </th>
               ))}
-              <th scope="col" className={thStyles}>
-                İşlemler
-              </th>
+              
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -73,16 +71,16 @@ const Table = ({
                       : row[col]}
                   </td>
                 ))}
-                <td className={tdStyles}>
+                {/* <td className={tdStyles}>
                   <div className="flex space-x-2">
-                    <Button variant="danger" size="sm">
+                    <Button variant="danger" size="sm" onClick={onDelete}>
                       <TbTrash className="mr-1" /> Sil
                     </Button>
-                    <Button variant="primary" size="sm">
+                    <Button variant="primary" size="sm" onClick={onEdit}>
                       <TbEdit className="mr-1" /> Düzenle
                     </Button>
                   </div>
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>
@@ -118,14 +116,14 @@ const Table = ({
                 </span>
               </div>
             ))}
-            <div className="flex justify-end space-x-2 mt-4 pt-4 border-t border-gray-200">
-              <Button variant="danger" size="sm">
+            {/* <div className="flex justify-end space-x-2 mt-4 pt-4 border-t border-gray-200">
+              <Button variant="danger" size="sm" onClick={onDelete}>
                 <TbTrash className="mr-1" /> Sil
               </Button>
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" onClick={onEdit}>
                 <TbEdit className="mr-1" /> Düzenle
               </Button>
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

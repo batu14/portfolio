@@ -4,49 +4,83 @@ import { useState } from "react";
 import Button from "../../../../Components/Button";
 import Modal from "../../../../Components/Modal";
 import SkillsModal from "../../../../Modals/SkillsModal";
-import { useDispatch } from "react-redux";
-import { setActiveTab } from "../../../../Features/Tab/TabSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setId, removeId } from "../../../../Features/Tab/SkillsReducer";
 import Table from "../../../../Components/Table";
 import { CiCirclePlus } from "react-icons/ci";
+import { CiEdit } from "react-icons/ci";
+import { CiTrash } from "react-icons/ci";
+import Loading from "../../../../Components/Loading";
 
 const index = () => {
-  const [skill, setSkill] = useState();
-  const [text, setText] = useState();
-  const [photo, setPhoto] = useState();
-  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const { id } = useSelector((state) => state.skills);
+  const token = useSelector((state) => state.token.token);
+  const [isOpen, setIsOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const columns = [
-    { header: "Ad", render: (row) => row.firstName },
-    { header: "Soyad", render: (row) => row.lastName },
+    { header: "Title", render: (row) => row.title },
+    { header: "Description", render: (row) => row.description },
+    { header: "Type", render: (row) => row.type },
     {
-      header: "Durum",
+      header: "Action",
       render: (row) => (
-        <span
-          className={`px-2 py-1 rounded-full text-xs ${
-            row.status === "active"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-          }`}
-        >
-          {row.status}
-        </span>
+        <div className="flex items-center gap-2">
+          <Button onClick={() => handleEdit(row)}>
+            <CiEdit />
+            Edit
+          </Button>
+          <Button variant="danger" onClick={() => handleDelete(row.id)}>
+            <CiTrash />
+            Delete
+          </Button>
+        </div>
       ),
     },
   ];
 
-  const data = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      status: "active",
-    },
-    {
-      firstName: "Jane",
-      lastName: "Smith",
-      status: "inactive",
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(import.meta.env.VITE_API_URL + "skills",{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data.data);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleDelete = (id) => {
+    fetch(import.meta.env.VITE_API_URL + "skills/delete/" + id, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  useEffect(() => {
+    if (isOpen == false) {
+      setEditData(null);
+    }
+  }, [isOpen]);
+
+  const handleEdit = (row) => {
+    dispatch(setId(row.id));
+    setIsOpen(true);
+    setEditData(row);
+  };
+
+  if(loading){
+    return <Loading />;
+  }
 
   return (
     <Container isPadding={false}>
@@ -57,22 +91,26 @@ const index = () => {
           }}
         >
           Ekle
-          <CiCirclePlus/>
+          <CiCirclePlus />
         </Button>
         {isOpen && (
           <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-            <SkillsModal></SkillsModal>
+            <SkillsModal token={token} editData={editData} setIsOpen={setIsOpen}></SkillsModal>
           </Modal>
         )}
       </div>
-      <Table
-        data={data}
-        column={columns}
-        striped={true}
-        hover={true}
-        bordered={true}
-        compact={false}
-      />
+      {data.length > 0 ? (
+        <Table
+          data={data}
+          column={columns}
+          striped={true}
+          hover={true}
+          bordered={true}
+          compact={false}
+        />
+      ) : (
+        <div>No data</div>
+      )}
     </Container>
   );
 };
