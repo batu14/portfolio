@@ -1,12 +1,43 @@
-# React + Vite
+👨‍💻 Batuhan Çiftçi – Kişisel Portföy
+Hoş geldiniz! Ben Batuhan Çiftçi, yazılım geliştirme ve web teknolojileri konusunda tutkulu bir full-stack geliştiriciyim. Bu repository, projelerimi, yeteneklerimi ve deneyimlerimi sergileyen kişisel portföyümün kaynak kodlarını içermektedir.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🚀 Proje Hakkında
+Bu portföy, React ve Vite kullanılarak sıfırdan geliştirildi. Amacım, modern web uygulamalarının temel yapı taşlarını kullanarak hızlı, ölçeklenebilir ve kullanıcı dostu bir arayüz oluşturmak oldu.
 
-Currently, two official plugins are available:
+🧰 Kullanılan Teknolojiler
+Frontend: React, Vite
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Styling: Tailwind CSS
 
-## Expanding the ESLint configuration
+Yapılandırma: ESLint, Prettier
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+📂 Proje Yapısı
+public/: Statik dosyalar
+
+src/: Uygulama bileşenleri ve mantığı
+
+.env: Ortam değişkenleri
+
+vite.config.js: Vite yapılandırma dosyası
+
+package.json: Bağımlılıklar ve betikler
+
+
+🛠️ Kurulum ve Çalıştırma
+
+Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
+
+1. Repository'yi klonlayın ve proje dizinine geçin:
+   git clone https://github.com/batu14/portfolio.git
+   cd portfolio
+
+2. Bağımlılıkları yükleyin:
+   npm install
+
+3. Geliştirme sunucusunu başlatın:
+   npm run dev
+
+4. Tarayıcınızda uygulamayı açın:
+   http://localhost:5173 adresine gidin.
+
+💡 Not: Projeyi çalıştırmak için sisteminizde Node.js’in kurulu olması gerekmektedir.
